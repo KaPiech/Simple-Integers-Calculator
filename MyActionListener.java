@@ -12,7 +12,10 @@ public class MyActionListener implements ActionListener{
 	int b = 0;
 	boolean n = true;
 	boolean equal_check = false;
-	boolean downside = false;		
+	boolean equal_check_2 = false;
+	boolean downside = false;
+	boolean b_check = false;
+	boolean a_check = false;			
 	JTextField text_field;
 	
 	public MyActionListener(JTextField text) {
@@ -37,16 +40,21 @@ public class MyActionListener implements ActionListener{
 			if(equal_check == true) {
 				a = 0;
 				b = 0;
+				operator = '0';
 				n = true;
 				equal_check=false; 
+				equal_check_2=false; 
+				a_check = false;			
 			}
 			if(n == true) {
-				if(a == 0) {
+				if(a == 0 && a_check == false) {		
 					a = Character.getNumericValue(input);
 					text_field.setText(String.valueOf(a));
+					a_check = true;					
 				}else if (b == 0) {
 					b = Character.getNumericValue(input);
 					text_field.setText(String.valueOf(b));
+					b_check = true;
 				}
 			n = false;
 			}
@@ -64,7 +72,14 @@ public class MyActionListener implements ActionListener{
 		case '-':
 		case '*':
 		case '/':
-			if(input == '-' && a == 0 && b == 0) { 
+			if(equal_check == true) {
+				b = 0;
+				n = true;
+				equal_check=false; 
+				equal_check_2=false; 
+			}
+			if(equal_check_2 == false) {
+			if(input == '-' && a == 0 && b == 0 && a_check == false) { 
 				downside = true;
 				break;
 			}
@@ -72,7 +87,13 @@ public class MyActionListener implements ActionListener{
 				a = -a;
 				downside = false;
 			}
-			if(operator != '0') {
+			
+			if(operator == '/' && b == 0 && b_check == true) {
+				text_field.setText("error->division by 0");
+				break;
+			}
+			
+			if(operator != '0' && b != 0) {
 				if(operator == '+') {
 					a = a + b;
 				}else if (operator == '-') {
@@ -80,28 +101,33 @@ public class MyActionListener implements ActionListener{
 				}else if (operator == '*') {
 					a = a * b;
 				}else if (operator == '/') {
-					if(b != 0) {
 					a = a / b;
-					}else {
-						text_field.setText("error->division by 0");
-						break;
 					}
 				}	
-				b = 0;
-			}
+			
+			b = 0;
 			operator = input;
 			n = true;
+			b_check = false;
 			text_field.setText(String.valueOf(a));
-			break;
+			break;}
 		case 'C':
 			a = 0;
 			b = 0;
 			operator = '0';
 			n = true;
 			equal_check=false; 
+			equal_check_2=false; 
+			downside = false;
+			b_check = false;
+			a_check = false;			
 			text_field.setText("0");
 			break;
 		case '=':
+			if(downside == true) {
+				a = -a;
+				downside = false;
+			}
 			if(operator == '+') {
 				a = a + b;
 			}else if (operator == '-') {
@@ -118,10 +144,10 @@ public class MyActionListener implements ActionListener{
 			}
 			text_field.setText(String.valueOf(a));
 			n=true;
-			equal_check=true; 
-			a = 0;
-			b = 0;
-			operator = '0';
+			equal_check=true;
+			b_check = false;
+			equal_check_2=true;
+			a_check = false;			
 			break;
 		}
 	}

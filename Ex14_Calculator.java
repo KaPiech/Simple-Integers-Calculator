@@ -1,11 +1,14 @@
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 public class Ex14_Calculator {
 
@@ -14,11 +17,17 @@ public class Ex14_Calculator {
     public static void createAndShowGUI() {
     	
     	JFrame jf = new JFrame("Integer Calculator");
+    	jf.setPreferredSize(new Dimension(300, 330));
     	jframe=jf;
         
         JTextField text_field = new JTextField();
+        text_field.setPreferredSize(new Dimension(300, 50));
+        Font font1 = new Font("SansSerif", Font.BOLD, 25);
+        text_field.setFont(font1);
         jf.add(text_field, BorderLayout.NORTH);
-       
+        text_field.setText("0");
+        text_field.setHorizontalAlignment(SwingConstants.RIGHT);
+        
         JPanel panel = new JPanel();
         jf.add(panel,BorderLayout.CENTER);
         
@@ -116,7 +125,7 @@ public class Ex14_Calculator {
 	
     public static void main(String[] args) {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() { createAndShowGUI(); }
+            public void run() { createAndShowGUI();}
         });        
     }
 
